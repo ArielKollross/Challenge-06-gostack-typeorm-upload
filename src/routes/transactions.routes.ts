@@ -1,6 +1,7 @@
 import { Router } from 'express';
+import { getRepository } from 'typeorm';
 
-// import TransactionsRepository from '../repositories/TransactionsRepository';
+import TransactionsRepository from '../repositories/TransactionsRepository';
 import CreateTransactionService from '../services/CreateTransactionService';
 // import DeleteTransactionService from '../services/DeleteTransactionService';
 // import ImportTransactionsService from '../services/ImportTransactionsService';
@@ -8,11 +9,15 @@ import CreateTransactionService from '../services/CreateTransactionService';
 const transactionsRouter = Router();
 
 transactionsRouter.get('/', async (request, response) => {
-  // TODO
+  const transactionRepository = getRepository(TransactionsRepository);
+
+  const transactions = await transactionRepository.find();
+
+  return response.json(transactions);
 });
 
 transactionsRouter.post('/', async (request, response) => {
-  const { title, value, type, category, date } = request.body;
+  const { title, value, type, category } = request.body;
 
   const createTransaction = new CreateTransactionService();
 
@@ -21,7 +26,6 @@ transactionsRouter.post('/', async (request, response) => {
     value,
     type,
     category,
-    date,
   });
 
   delete transaction.updated_at;
