@@ -16,7 +16,7 @@ class DeleteTransactionService {
       throw new AppError('error to delet transaction');
     }
 
-    await transascitonsRepository.delete(id);
+    await transascitonsRepository.remove(deleteId);
   }
 }
 

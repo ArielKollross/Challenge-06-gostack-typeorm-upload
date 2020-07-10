@@ -34,9 +34,6 @@ transactionsRouter.post('/', async (request, response) => {
     category,
   });
 
-  delete transaction.updated_at;
-  delete transaction.created_at;
-
   return response.json(transaction);
 });
 
